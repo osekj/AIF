@@ -1,7 +1,7 @@
 # AIF
 Artificial Intelligence Fundamentals Project
 
-Commands to use to:
+Commands used to:
 
 1. Encode faces
 
