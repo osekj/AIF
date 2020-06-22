@@ -20,7 +20,7 @@ imagePaths = list(paths.list_images(args["dataset"]))
 
 knownEncodings = []
 knownNames = []
-#endregion
+# endregion
 
 # region Encoding
 for (i, imagePath) in enumerate(imagePaths):
