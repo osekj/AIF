@@ -9,4 +9,4 @@ python encode_faces.py --dataset dataset --encodings encodings.pickle
 
 2. Recognize faces
 
-python recognize_faces.py --encodings encodings.pickle image_file.ext 
+python recognize_faces.py --encodings encodings.pickle --image examples/image_file.ext 

@@ -15,7 +15,10 @@ cnn_face_detector = dlib.cnn_face_detection_model_v1(cnn_face_detection_model)
 face_recognition_model = face_recognition_models.face_recognition_model_location()
 face_encoder = dlib.face_recognition_model_v1(face_recognition_model)
 
+
 # endregion
+
+dlib.DLIB_USE_CUDA = True
 
 # region Functions used to make sure that face rectangle is within the bound of the image
 
@@ -33,6 +36,7 @@ def _css_to_rect(css):
 # and returns a trimmed plain tuple representation of the rect in (top, right, bottom, left) order
 def _trim_css_to_bounds(css, image_shape):
     return max(css[0], 0), min(css[1], image_shape[1]), min(css[2], image_shape[0]), max(css[3], 0)
+
 
 # endregion
 
@@ -87,7 +91,9 @@ def face_landmarks(face_image, face_locations=None):
 # Returns a list of 128-dimensional face encodings (one for each face in the image)
 def face_encodings(face_image, known_face_locations=None, num_jitters=1):
     raw_landmarks = raw_face_landmarks(face_image, known_face_locations)
-    return [np.array(face_encoder.compute_face_descriptor(face_image, raw_landmark_set, num_jitters)) for raw_landmark_set in raw_landmarks]
+    return [np.array(face_encoder.compute_face_descriptor(face_image, raw_landmark_set, num_jitters)) for
+            raw_landmark_set in raw_landmarks]
+
 
 # endregion
 
