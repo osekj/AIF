@@ -15,10 +15,10 @@ cnn_face_detector = dlib.cnn_face_detection_model_v1(cnn_face_detection_model)
 face_recognition_model = face_recognition_models.face_recognition_model_location()
 face_encoder = dlib.face_recognition_model_v1(face_recognition_model)
 
-
 # endregion
 
 dlib.DLIB_USE_CUDA = True
+
 
 # region Functions used to make sure that face rectangle is within the bound of the image
 
@@ -43,8 +43,9 @@ def _trim_css_to_bounds(css, image_shape):
 # region Functions used to encode faces
 
 # Returns a list of dlib 'rect' objects of found face locations
-def raw_face_locations(img, number_of_times_to_up_sample=1, model="hog"):
+def raw_face_locations(img, number_of_times_to_up_sample=1):
     return cnn_face_detector(img, number_of_times_to_up_sample)
+
 
 # Returns
 def raw_face_landmarks(face_image, face_locations=None):
@@ -61,7 +62,7 @@ def raw_face_landmarks(face_image, face_locations=None):
 # Returns list of tuples of found face locations in css (top, right, bottom, left) order
 def face_locations(img, number_of_times_to_up_sample=1):
     return [_trim_css_to_bounds(_rect_to_css(face.rect), img.shape) for face in
-            raw_face_locations(img, number_of_times_to_up_sample, "cnn")]
+            raw_face_locations(img, number_of_times_to_up_sample)]
 
 
 # Returns a list of dicts of face feature locations (eyes, nose, etc)
