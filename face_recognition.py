@@ -44,11 +44,7 @@ def _trim_css_to_bounds(css, image_shape):
 
 # Returns a list of dlib 'rect' objects of found face locations
 def raw_face_locations(img, number_of_times_to_up_sample=1, model="hog"):
-    if model == "cnn":
-        return cnn_face_detector(img, number_of_times_to_up_sample)
-    else:
-        return face_detector(img, number_of_times_to_up_sample)
-
+    return cnn_face_detector(img, number_of_times_to_up_sample)
 
 # Returns
 def raw_face_landmarks(face_image, face_locations=None):
