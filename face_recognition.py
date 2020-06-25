@@ -20,7 +20,7 @@ face_encoder = dlib.face_recognition_model_v1(face_recognition_model)
 dlib.DLIB_USE_CUDA = True
 
 
-# region Functions used to make sure that face rectangle is within the bound of the image
+# region Functions used to make sure that face rectangle is within the bound of the image and convert things
 
 # Converts a dlib 'rect' object to a plain tuple in (top, right, bottom, left) order
 def _rect_to_css(rect):
