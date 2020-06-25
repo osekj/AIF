@@ -6,8 +6,8 @@ import face_recognition_models
 
 face_detector = dlib.get_frontal_face_detector()
 
-predictor_68_point_model = face_recognition_models.pose_predictor_model_location()
-pose_predictor_68_point = dlib.shape_predictor(predictor_68_point_model)
+predictor_model = face_recognition_models.pose_predictor_model_location()
+pose_predictor = dlib.shape_predictor(predictor_model)
 
 cnn_face_detection_model = face_recognition_models.cnn_face_detector_model_location()
 cnn_face_detector = dlib.cnn_face_detection_model_v1(cnn_face_detection_model)
@@ -54,8 +54,6 @@ def raw_face_landmarks(face_image, face_locations=None):
     else:
         face_locations = [_css_to_rect(face_location) for face_location in face_locations]
 
-    pose_predictor = pose_predictor_68_point
-
     return [pose_predictor(face_image, face_location) for face_location in face_locations]
 
 
@@ -63,26 +61,6 @@ def raw_face_landmarks(face_image, face_locations=None):
 def face_locations(img, number_of_times_to_up_sample=1):
     return [_trim_css_to_bounds(_rect_to_css(face.rect), img.shape) for face in
             raw_face_locations(img, number_of_times_to_up_sample)]
-
-
-# Returns a list of dicts of face feature locations (eyes, nose, etc)
-def face_landmarks(face_image, face_locations=None):
-    landmarks = raw_face_landmarks(face_image, face_locations)
-    landmarks_as_tuples = [[(p.x, p.y) for p in landmark.parts()] for landmark in landmarks]
-
-    # https://cdn-images-1.medium.com/max/1600/1*AbEg31EgkbXSQehuNJBlWg.png scheme was used
-    return [{
-        "chin": points[0:17],
-        "left_eyebrow": points[17:22],
-        "right_eyebrow": points[22:27],
-        "nose_bridge": points[27:31],
-        "nose_tip": points[31:36],
-        "left_eye": points[36:42],
-        "right_eye": points[42:48],
-        "top_lip": points[48:55] + [points[64]] + [points[63]] + [points[62]] + [points[61]] + [points[60]],
-        "bottom_lip": points[54:60] + [points[48]] + [points[60]] + [points[67]] + [points[66]] + [points[65]] + [
-            points[64]]
-    } for points in landmarks_as_tuples]
 
 
 # Returns a list of 128-dimensional face encodings (one for each face in the image)
